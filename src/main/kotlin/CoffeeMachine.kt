@@ -1,25 +1,27 @@
 package coffeemachine
 
+import coffeemachine.Coffee.COFFEE_MACHINE
+
 class CoffeeMachine {
 
     fun makeCoffee(coffee: String) {
         when {
-            Coffee.COFFEE_MACHINE.waterCount - Coffee.valueOf(coffee).waterCount < 0 -> {
+            (COFFEE_MACHINE.waterCount - getCoffeeType(coffee).waterCount) < 0 -> {
                 println("Sorry, not enough water")
                 return
             }
 
-            Coffee.COFFEE_MACHINE.milkCount - Coffee.valueOf(coffee).milkCount < 0 -> {
+            (COFFEE_MACHINE.milkCount - getCoffeeType(coffee).milkCount) < 0 -> {
                 println("Sorry, not enough milk")
                 return
             }
 
-            Coffee.COFFEE_MACHINE.beansCount - Coffee.valueOf(coffee).beansCount < 0 -> {
+            (COFFEE_MACHINE.beansCount - getCoffeeType(coffee).beansCount) < 0 -> {
                 println("Sorry, not enough beans")
                 return
             }
 
-            Coffee.COFFEE_MACHINE.disposalCupsCount - Coffee.valueOf(coffee).disposalCupsCount < 0 -> {
+            (COFFEE_MACHINE.disposalCupsCount - getCoffeeType(coffee).disposalCupsCount) < 0 -> {
                 println("Sorry, not enough cups")
                 return
             }
@@ -27,31 +29,31 @@ class CoffeeMachine {
             else -> println("I have enough resources, making you ${coffee.lowercase()}!")
         }
 
-        Coffee.COFFEE_MACHINE.waterCount -= Coffee.valueOf(coffee).waterCount
-        Coffee.COFFEE_MACHINE.milkCount -= Coffee.valueOf(coffee).milkCount
-        Coffee.COFFEE_MACHINE.beansCount -= Coffee.valueOf(coffee).beansCount
-        Coffee.COFFEE_MACHINE.disposalCupsCount -= Coffee.valueOf(coffee).disposalCupsCount
-        Coffee.COFFEE_MACHINE.cost += Coffee.valueOf(coffee).cost
+        COFFEE_MACHINE.waterCount -= getCoffeeType(coffee).waterCount
+        COFFEE_MACHINE.milkCount -= getCoffeeType(coffee).milkCount
+        COFFEE_MACHINE.beansCount -= getCoffeeType(coffee).beansCount
+        COFFEE_MACHINE.disposalCupsCount -= getCoffeeType(coffee).disposalCupsCount
+        COFFEE_MACHINE.cost += getCoffeeType(coffee).cost
 
     }
 
     fun fillCoffeeMachine() {
         println("Write how many ml of water you want to add: ")
-        Coffee.COFFEE_MACHINE.waterCount += readln().toInt()
+        COFFEE_MACHINE.waterCount += readln().toInt()
 
         println("Write how many ml of milk you want to add: ")
-        Coffee.COFFEE_MACHINE.milkCount += readln().toInt()
+        COFFEE_MACHINE.milkCount += readln().toInt()
 
         println("Write how many grams of coffee beans you want to add:")
-        Coffee.COFFEE_MACHINE.beansCount += readln().toInt()
+        COFFEE_MACHINE.beansCount += readln().toInt()
 
         println("Write how many disposable cups you want to add:")
-        Coffee.COFFEE_MACHINE.disposalCupsCount += readln().toInt()
+        COFFEE_MACHINE.disposalCupsCount += readln().toInt()
     }
 
     fun takeMoney() {
-        println("I gave you ${Coffee.COFFEE_MACHINE.cost}")
-        Coffee.COFFEE_MACHINE.cost -= Coffee.COFFEE_MACHINE.cost
+        println("I gave you ${COFFEE_MACHINE.cost}")
+        COFFEE_MACHINE.cost -= COFFEE_MACHINE.cost
     }
 
     fun print() {
@@ -59,16 +61,18 @@ class CoffeeMachine {
             """
             
         The coffee machine has:
-        ${Coffee.COFFEE_MACHINE.waterCount} ml of water
-        ${Coffee.COFFEE_MACHINE.milkCount} ml of milk
-        ${Coffee.COFFEE_MACHINE.beansCount} g of coffee beans
-        ${Coffee.COFFEE_MACHINE.disposalCupsCount} disposable cups
-        $${Coffee.COFFEE_MACHINE.cost} of money
+        ${COFFEE_MACHINE.waterCount} ml of water
+        ${COFFEE_MACHINE.milkCount} ml of milk
+        ${COFFEE_MACHINE.beansCount} g of coffee beans
+        ${COFFEE_MACHINE.disposalCupsCount} disposable cups
+        $${COFFEE_MACHINE.cost} of money
         
     """.trimIndent()
         )
     }
 }
+
+fun getCoffeeType(coffee: String) = Coffee.valueOf(coffee)
 
 fun startApp() {
     while (true) {
